@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="836ad091-ba12-4da0-a39e-02128c0e544c" name="kupangenergi.co.id" url="http://kupangenergi.co.id">
+        <fileTransfer host="kupangenergi.co.id" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="615b06e0-5e06-43af-9ee0-7d2d795d07fa" name="rabbit-media.net" url="http://rabbit-media.net">
+        <fileTransfer host="rabbit-media.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

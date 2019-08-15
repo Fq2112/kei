@@ -109,7 +109,7 @@
                             <li><i class="icon-phone2"></i><a href="tel:03808443065">(0380) 8443065</a></li>
                             <li><i class="icon-mail"></i><a href="mailto:info@kupangenergi.co.id">info@kupangenergi.co.id</a>
                             </li>
-                            <li><i class="icon-globe2"></i><a href="http://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a>
+                            <li><i class="icon-globe2"></i><a href="https://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a>
                             </li>
                         </ul>
                     </div>

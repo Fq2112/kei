@@ -43,6 +43,8 @@
     <link rel="stylesheet" href="{{asset('css/superfish.css')}}">
     <!-- Flexslider  -->
     <link rel="stylesheet" href="{{asset('css/flexslider.css')}}">
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="{{asset('vendor/sweetalert/sweetalert2.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- Modernizr JS -->
     <script src="{{asset('js/modernizr-2.6.2.min.js')}}"></script>
@@ -51,6 +53,48 @@
     <script src="{{asset('js/respond.min.js')}}"></script>
     <![endif]-->
     <style>
+        body::-webkit-scrollbar-track {
+            background: rgba(222, 222, 222, .75);
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px !important;
+            background-color: #F5F5F5;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            width: 8px !important;
+            background: rgba(250, 126, 10, 0.5);
+            border-radius: 5px;
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(251, 139, 35, 0.8);
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        body::-webkit-scrollbar-thumb:active {
+            background: rgb(251, 139, 35);
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        .fh5co-loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url({{asset('images/hourglass.svg')}}) center no-repeat #222222;
+        }
+
         .to-top {
             position: fixed;
             right: 1%;
@@ -114,10 +158,28 @@
             bottom: 1.25%;
             visibility: visible;
         }
+
+        .progress {
+            position: fixed;
+            margin-bottom: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            border-radius: 0;
+            z-index: 20;
+        }
+
+        .progress .bar {
+            height: 100%;
+            width: 10%;
+            background: #fb8b23;
+            transition: background 0.15s ease;
+        }
     </style>
     @stack('styles')
 </head>
-<body>
+<body class="use-nicescroll">
 <a href="#" onclick="scrollToTop()" class="to-top" title="Go to top">Top</a>
 <div id="fh5co-wrapper">
     <div id="fh5co-page">
@@ -196,7 +258,8 @@
                                 </li>
                                 <li><i class="icon-phone2"></i><a href="tel:03808443065">(0380) 8443065</a></li>
                                 <li><i class="icon-envelope2"></i><a href="mailto:info@kupangenergi.co.id">info@kupangenergi.co.id</a></li>
-                                <li><i class="icon-globe2"></i><a href="http://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a></li>
+                                <li><i class="icon-globe2"></i><a href="https://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a>
+                                </li>
                             </ul>
                         </div>
 
@@ -240,7 +303,8 @@
                                 <a href="#"><i class="icon-dribbble2"></i></a>
                                 <a href="#"><i class="icon-youtube"></i></a>
                             </p>--}}
-                            <p>Copyright &copy; {{now()->format('Y')}} <a href="http://kupangenergi.co.id">KEI &mdash; Kupang Energi Indonesia</a>. All Rights Reserved.
+                            <p>Copyright &copy; {{now()->format('Y')}} <a href="https://kupangenergi.co.id">KEI &mdash;
+                                    Kupang Energi Indonesia</a>. All Rights Reserved.
                                 <br>Template by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a>. Designed & Developed by <a href="https://rabbit-media.net/" target="_blank">Rabbit Media</a>.
                         </div>
                     </div>
@@ -251,7 +315,9 @@
     <!-- END fh5co-page -->
 </div>
 <!-- END fh5co-wrapper -->
-
+<div class="progress">
+    <div class="bar"></div>
+</div>
 <!-- jQuery -->
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <!-- jQuery Easing -->
@@ -267,7 +333,26 @@
 <script src="{{asset('js/jquery.flexslider-min.js')}}"></script>
 <!-- Main JS (Do not remove) -->
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/checkMobileDevice.js')}}"></script>
+<!-- Nicescroll -->
+<script src="{{asset('vendor/nicescroll/jquery.nicescroll.js')}}"></script>
+<!-- Sweetalert2 -->
+<script src="{{asset('vendor/sweetalert/sweetalert.min.js')}}"></script>
 <script>
+    $(function () {
+        window.mobilecheck() ? $("body").removeClass('use-nicescroll') : '';
+
+        $(".use-nicescroll").niceScroll({
+            cursorcolor: "rgb(250,126,10)",
+            cursorwidth: "8px",
+            background: "rgba(222, 222, 222, .75)",
+            cursorborder: 'none',
+            // cursorborderradius:0,
+            autohidemode: 'leave',
+            zindex: 99999999,
+        });
+    });
+
     window.onscroll = function() {scrollFunction()};
 
     function scrollFunction() {
@@ -298,8 +383,26 @@
         }, 500);
     }(title + " ~ "));
 
+    <!--Scroll Progress Bar-->
+    function progress() {
+        var windowScrollTop = $(window).scrollTop();
+        var docHeight = $(document).height();
+        var windowHeight = $(window).height();
+        var progress = (windowScrollTop / (docHeight - windowHeight)) * 100;
+        var $bgColor = progress > 99 ? '#FB8B23' : '#FA7E0A';
+        var $textColor = progress > 99 ? '#fff' : '#333';
+
+        $('.progress .bar').width(progress + '%').css({backgroundColor: $bgColor});
+        // $('h1').text(Math.round(progress) + '%').css({color: $textColor});
+        $('.fill').height(progress + '%').css({backgroundColor: $bgColor});
+    }
+
+    progress();
+
+    $(document).on('scroll', progress);
+
     @if(session('contact'))
-    window.alert('{{session('contact')}}');
+    swal('Successfully sent a message!', '{{ session('contact') }}', 'success');
     @endif
 </script>
 @stack('scripts')
