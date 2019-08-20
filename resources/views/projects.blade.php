@@ -74,9 +74,9 @@
                     </a>
                 </div>
                 <div class="col-md-4 text-center project">
-                    <a href="http://salwa.co.id" class="grid-project">
+                    <a href="https://salwa.co.id" class="grid-project" target="_blank">
                         <div class="image">
-                            <img src="{{asset('images/project2.jpg')}}" alt="EPCI" class="img-responsive"
+                            <img src="{{asset('images/salwa-kei.jpg')}}" alt="EPCI" class="img-responsive"
                                  style="width: 100%">
                         </div>
                         <div class="desc">
@@ -87,10 +87,10 @@
                                     Indonesia
                                 </li>
                                 <ul>
-                                    <li>Phone: +62 31 5667102 / 99533701</li>
-                                    <li>Fax: +62 31 5621868</li>
+                                    <li>Phone: +62 31 566 7102 / 99533701</li>
+                                    <li>Fax: +62 31 562 1868</li>
                                     <li>E-mail: syaif@salwa.co.id</li>
-                                    <li>Website: www.salwa.co.id / www.eng.salwa.co.id</li>
+                                    <li>Website: www.salwa.co.id</li>
                                 </ul>
                             </ul>
                         </div>
