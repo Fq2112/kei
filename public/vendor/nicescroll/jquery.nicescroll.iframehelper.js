@@ -8,7 +8,7 @@
 --
 */
 
-(function (document, window) {
+(function (document,window) {
 
     var body = document.body;
     var parent = window.parent;
@@ -90,7 +90,7 @@
                     lastiframe = e.target;
                     var chk = findNiceParent(lastiframe);
                     lastiframeviewport = chk;
-                    //if (chk) lastiframeviewport = $(chk).getNiceScroll();
+                    //if (chk) lastiframeviewport = $(chk).getNiceScroll();                
                     lastscroll = [window.scrollX, window.scrollY];
                 });
                 this.addEventListener("mouseleave", function (e) {
@@ -102,4 +102,4 @@
 
     }
 
-})(document, window);
+})(document,window);

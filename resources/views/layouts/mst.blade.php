@@ -53,6 +53,16 @@
     <script src="{{asset('js/respond.min.js')}}"></script>
     <![endif]-->
     <style>
+        ::selection {
+            background: #fa7e0a;
+            color: #fff;
+        }
+
+        ::-moz-selection {
+            background: #fa7e0a;
+            color: #fff;
+        }
+
         body::-webkit-scrollbar-track {
             background: rgba(222, 222, 222, .75);
         }
@@ -176,10 +186,101 @@
             background: #fb8b23;
             transition: background 0.15s ease;
         }
+
+        .images-preloader {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 10000000;
+            background-color: #fff;
+        }
+
+        .images-preloader .preloader {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 50px;
+            width: 50px;
+            margin: -25px 0 0 -25px;
+            border-radius: 50%;
+        }
+
+        .images-preloader .preloader:before,
+        .images-preloader .preloader:after {
+            content: "";
+            border: 3px solid #FA7E0A;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 0;
+        }
+
+        .images-preloader .preloader:before {
+            transform: scale(1, 1);
+            opacity: 1;
+            -webkit-animation: outside .6s infinite linear;
+            animation: outside .6s infinite linear
+        }
+
+        .images-preloader .preloader:after {
+            transform: scale(0, 0);
+            opacity: 0;
+            -webkit-animation: inside .6s infinite linear;
+            animation: inside .6s infinite linear
+        }
+
+        @-webkit-keyframes inside {
+            from {
+                -webkit-transform: scale(.5, .5);
+                opacity: 0
+            }
+            to {
+                -webkit-transform: scale(1, 1);
+                opacity: 1
+            }
+        }
+
+        @keyframes inside {
+            from {
+                transform: scale(.5, .5);
+                opacity: 0
+            }
+            to {
+                transform: scale(1, 1);
+                opacity: 1
+            }
+        }
+
+        @-webkit-keyframes outside {
+            from {
+                -webkit-transform: scale(1, 1);
+                opacity: 1
+            }
+            to {
+                -webkit-transform: scale(1.5, 1.5);
+                opacity: 0
+            }
+        }
+
+        @keyframes outside {
+            from {
+                -webkit-transform: scale(1, 1);
+                opacity: 1
+            }
+            to {
+                -webkit-transform: scale(1.5, 1.5);
+                opacity: 0
+            }
+        }
     </style>
     @stack('styles')
 </head>
 <body class="use-nicescroll">
+<div class="images-preloader">
+    <div class="preloader"></div>
+</div>
 <a href="#" onclick="scrollToTop()" class="to-top" title="Go to top">Top</a>
 <div id="fh5co-wrapper">
     <div id="fh5co-page">
@@ -258,8 +359,7 @@
                                 </li>
                                 <li><i class="icon-phone2"></i><a href="tel:03808443065">(0380) 8443065</a></li>
                                 <li><i class="icon-envelope2"></i><a href="mailto:info@kupangenergi.co.id">info@kupangenergi.co.id</a></li>
-                                <li><i class="icon-globe2"></i><a href="https://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a>
-                                </li>
+                                <li><i class="icon-globe2"></i><a href="https://kupangenergi.co.id" target="_blank">www.kupangenergi.co.id</a></li>
                             </ul>
                         </div>
 
@@ -303,8 +403,7 @@
                                 <a href="#"><i class="icon-dribbble2"></i></a>
                                 <a href="#"><i class="icon-youtube"></i></a>
                             </p>--}}
-                            <p>Copyright &copy; {{now()->format('Y')}} <a href="https://kupangenergi.co.id">KEI &mdash;
-                                    Kupang Energi Indonesia</a>. All Rights Reserved.
+                            <p>Copyright &copy; {{now()->format('Y')}} <a href="https://kupangenergi.co.id">KEI &mdash; Kupang Energi Indonesia</a>. All Rights Reserved.
                                 <br>Template by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a>. Designed & Developed by <a href="https://rabbit-media.net/" target="_blank">Rabbit Media</a>.
                         </div>
                     </div>
@@ -339,19 +438,40 @@
 <!-- Sweetalert2 -->
 <script src="{{asset('vendor/sweetalert/sweetalert.min.js')}}"></script>
 <script>
-    $(function () {
+    window.onload = function () {
+        $('.images-preloader').fadeOut();
+
         window.mobilecheck() ? $("body").removeClass('use-nicescroll') : '';
 
         $(".use-nicescroll").niceScroll({
             cursorcolor: "rgb(250,126,10)",
             cursorwidth: "8px",
             background: "rgba(222, 222, 222, .75)",
-            cursorborder: 'none',
+            cursorborder:'none',
             // cursorborderradius:0,
-            autohidemode: 'leave',
+            autohidemode:'leave',
             zindex: 99999999,
         });
-    });
+
+        var options = {
+            call: "03808443065",
+            email: "{{env('MAIL_USERNAME')}}",
+            call_to_action: "Message us",
+            button_color: "#FA7E0A",
+            position: "left",
+            order: "email,call",
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () {
+            WhWidgetSendButton.init(host, proto, options);
+        };
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    };
 
     window.onscroll = function() {scrollFunction()};
 
